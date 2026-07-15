@@ -4,6 +4,7 @@ export class QuestionEngine {
   constructor(questions) {
     this.questions = questions;
     this.byId = new Map(questions.map((q) => [q.id, q]));
+    this.orderIndexById = new Map(questions.map((q, idx) => [q.id, idx + 1]));
   }
 
   getById(id) {
@@ -19,10 +20,13 @@ export class QuestionEngine {
       subject = 'all',
       topic = '',
       difficulty = 'all',
-      count = 10
+      count = 10,
+      from = null,
+      to = null
     } = options;
 
     let pool = this.query({ subject, topic, difficulty }, storageState);
+    pool = this.filterByRange(pool, from, to);
 
     if (mode === 'wrong') {
       pool = pool.filter((q) => storageState.wrongQuestions.includes(q.id));
@@ -32,13 +36,9 @@ export class QuestionEngine {
       pool = pool.filter((q) => storageState.bookmarks.includes(q.id));
     }
 
-    if (mode === 'mixed') {
-      pool = shuffle(pool);
-    }
-
     if (mode === 'mock') {
-      pool = shuffle(this.questions).slice(0, Math.min(65, this.questions.length));
-      return pool;
+      const linearMockPool = this.filterByRange(this.questions, from, to);
+      return linearMockPool.slice(0, Math.min(65, linearMockPool.length));
     }
 
     if (mode === 'practice' && pool.length > 0) {
@@ -52,13 +52,20 @@ export class QuestionEngine {
 
     return pool.slice(0, Math.min(count, pool.length));
   }
-}
 
-function shuffle(array) {
-  const out = [...array];
-  for (let i = out.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
+  filterByRange(questions, from, to) {
+    const normalizedFrom = Number.isFinite(from) && from > 0 ? Math.floor(from) : null;
+    const normalizedTo = Number.isFinite(to) && to > 0 ? Math.floor(to) : null;
+
+    if (normalizedFrom == null && normalizedTo == null) return questions;
+
+    const start = normalizedFrom ?? 1;
+    const end = Math.max(start, normalizedTo ?? Number.MAX_SAFE_INTEGER);
+
+    return questions.filter((q) => {
+      const order = this.orderIndexById.get(q.id);
+      if (order == null) return false;
+      return order >= start && order <= end;
+    });
   }
-  return out;
 }

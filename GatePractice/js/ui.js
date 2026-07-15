@@ -102,13 +102,13 @@ export function renderSearchResults(container, rows) {
 
   container.innerHTML = rows
     .map(
-      (q) => `
+      (q, idx) => `
       <div class="search-item">
         <div>
           <strong>${q.id}</strong>
           <p class="subtle">${q.subject} • ${q.topic} • ${q.difficulty}</p>
         </div>
-        <button class="btn secondary" data-jump-id="${q.id}">Open</button>
+        <button class="btn secondary" data-jump-id="${q.id}" data-jump-index="${idx}">Open</button>
       </div>
     `
     )

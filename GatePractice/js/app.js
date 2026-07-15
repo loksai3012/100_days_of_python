@@ -2,7 +2,7 @@ import { QuestionEngine } from './questionEngine.js';
 import { computeAnalytics } from './analytics.js';
 import { Timer } from './timer.js';
 import { renderDashboard } from './dashboard.js';
-import { renderReview } from './review.js';
+import { renderReview, stepReview } from './review.js';
 import { setupTabs, renderQuestionView, collectAnswer, renderPalette, renderSearchResults, toast } from './ui.js';
 import { loadState, saveState, withAutoSave, upsertProgress, ensureUniquePush, removeValue } from './storage.js';
 import { applyTheme, toggleTheme } from './theme.js';
@@ -18,7 +18,8 @@ const state = {
   session: null,
   currentIndex: 0,
   timer: null,
-  lastReviewPayload: null
+  lastReviewPayload: null,
+  lastSearchRows: []
 };
 
 async function init() {
@@ -123,27 +124,32 @@ function bindStaticEvents() {
 
   document.getElementById('searchResults').addEventListener('click', (event) => {
     const button = event.target.closest('[data-jump-id]');
-    if (!button) return;
-    const id = button.dataset.jumpId;
-    const q = state.questionEngine.getById(id);
-    if (!q) return;
+    if (!button || !state.lastSearchRows.length) return;
+    const jumpIndex = Number(button.dataset.jumpIndex);
+    if (Number.isNaN(jumpIndex) || jumpIndex < 0 || jumpIndex >= state.lastSearchRows.length) return;
 
-    const singleSession = {
-      mode: 'custom',
+    state.session = {
+      mode: 'search',
       startedAt: Date.now(),
       durationSec: null,
       elapsedSec: 0,
-      questionIds: [id],
+      questionIds: state.lastSearchRows.map((row) => row.id),
       responses: {},
-      currentIndex: 0
+      currentIndex: jumpIndex
     };
-
-    state.session = singleSession;
-    state.currentIndex = 0;
+    state.currentIndex = jumpIndex;
     startTimer(null, 0);
     persistSession();
     mountQuestion();
     activateTab('practicePanel');
+  });
+
+  document.getElementById('reviewPanel').addEventListener('click', (event) => {
+    const stepButton = event.target.closest('[data-review-step]');
+    if (!stepButton || !state.lastReviewPayload) return;
+    const step = Number(stepButton.dataset.reviewStep);
+    if (Number.isNaN(step) || step === 0) return;
+    stepReview(document.getElementById('reviewPanel'), state.lastReviewPayload, step);
   });
 
   document.addEventListener('keydown', (event) => {
@@ -164,10 +170,12 @@ function startNewSessionFromForm() {
   const topic = document.getElementById('topicInput').value;
   const count = Number(document.getElementById('questionCount').value || 10);
   const durationMin = Number(document.getElementById('durationInput').value || 30);
+  const from = Number(document.getElementById('questionFrom').value);
+  const to = Number(document.getElementById('questionTo').value);
 
   const questionSet = state.questionEngine.buildTestSet(
     mode,
-    { subject, difficulty, topic, count },
+    { subject, difficulty, topic, count, from, to },
     state.storage
   );
 
@@ -200,16 +208,8 @@ function startTimer(limitSec, elapsedSec = 0) {
     state.session.elapsedSec = state.timer.elapsedSec;
     persistSession();
 
-    const currentQuestion = getCurrentQuestion();
-    if (currentQuestion) {
-      renderQuestionView(
-        currentQuestion,
-        state.currentIndex,
-        state.session.questionIds.length,
-        state.session.responses[currentQuestion.id],
-        state.timer.format(state.timer.getRemainingSec() ?? state.timer.elapsedSec)
-      );
-    }
+    const timerEl = document.getElementById('questionTimer');
+    if (timerEl) timerEl.textContent = state.timer.format(state.timer.getRemainingSec() ?? state.timer.elapsedSec);
 
     if (state.timer.getRemainingSec() === 0 && state.session.durationSec != null) {
       submitSession();
@@ -378,7 +378,8 @@ function runSearch() {
   const topic = document.getElementById('topicInput').value;
 
   const rows = state.questionEngine.query({ query, status, subject, difficulty, topic }, state.storage);
-  renderSearchResults(document.getElementById('searchResults'), rows.slice(0, 100));
+  state.lastSearchRows = rows.slice(0, 100);
+  renderSearchResults(document.getElementById('searchResults'), state.lastSearchRows);
 }
 
 function renderAnalyticsPanel(stats) {
