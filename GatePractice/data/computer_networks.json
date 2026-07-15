@@ -1,0 +1,89 @@
+{
+  "subject": "Computer Networks",
+  "questions": [
+    {
+      "id": "CN-001",
+      "subject": "CN",
+      "topic": "Routing",
+      "difficulty": "easy",
+      "type": "MCQ",
+      "marks": 1,
+      "negativeMarks": 0.33,
+      "question": "Which protocol is a distance-vector routing protocol?",
+      "options": [
+        { "key": "A", "text": "OSPF" },
+        { "key": "B", "text": "RIP" },
+        { "key": "C", "text": "IS-IS" },
+        { "key": "D", "text": "BGP" }
+      ],
+      "correctAnswer": "B",
+      "explanation": "RIP uses Bellman-Ford distance-vector approach.",
+      "shortcut": "RIP = classic DV protocol.",
+      "commonMistakes": "Confusing OSPF (link-state) with RIP.",
+      "relatedConcepts": ["Bellman-Ford", "Convergence"],
+      "estimatedSolvingTimeSec": 35
+    },
+    {
+      "id": "CN-002",
+      "subject": "CN",
+      "topic": "TCP",
+      "difficulty": "medium",
+      "type": "MSQ",
+      "marks": 2,
+      "negativeMarks": 0,
+      "question": "Which statements about TCP are true?",
+      "options": [
+        { "key": "A", "text": "TCP is connection-oriented" },
+        { "key": "B", "text": "TCP provides flow control" },
+        { "key": "C", "text": "TCP uses fixed packet size" },
+        { "key": "D", "text": "TCP provides reliable byte stream" }
+      ],
+      "correctAnswer": ["A", "B", "D"],
+      "explanation": "TCP segment sizes vary; reliability and flow control are built in.",
+      "shortcut": "TCP = reliable, connection-oriented byte stream.",
+      "commonMistakes": "Assuming fixed-size packets like ATM cells.",
+      "relatedConcepts": ["Sliding Window", "Congestion Control"],
+      "estimatedSolvingTimeSec": 50
+    },
+    {
+      "id": "CN-003",
+      "subject": "CN",
+      "topic": "Subnetting",
+      "difficulty": "medium",
+      "type": "NAT",
+      "marks": 2,
+      "negativeMarks": 0,
+      "question": "A /24 network is subnetted into /27. How many subnets are created?",
+      "options": [],
+      "correctAnswer": 8,
+      "tolerance": 0,
+      "explanation": "Borrowed bits = 27-24 = 3, so subnets = 2^3 = 8.",
+      "shortcut": "Subnets = 2^(new prefix - old prefix).",
+      "commonMistakes": "Mixing host count formula with subnet count.",
+      "relatedConcepts": ["CIDR", "Addressing"],
+      "estimatedSolvingTimeSec": 30
+    },
+    {
+      "id": "CN-004",
+      "subject": "CN",
+      "topic": "Data Link Layer",
+      "difficulty": "hard",
+      "type": "MCQ",
+      "marks": 2,
+      "negativeMarks": 0.67,
+      "question": "Which CRC property helps detect burst errors effectively?",
+      "options": [
+        { "key": "A", "text": "Polynomial division over GF(2)" },
+        { "key": "B", "text": "Use of decimal checksum" },
+        { "key": "C", "text": "ASCII coding" },
+        { "key": "D", "text": "Stop-and-wait ACK" }
+      ],
+      "correctAnswer": "A",
+      "explanation": "CRC models bitstring as polynomial in GF(2), enabling strong burst error detection.",
+      "shortcut": "CRC = modulo-2 polynomial arithmetic.",
+      "commonMistakes": "Confusing with checksum mechanisms.",
+      "relatedConcepts": ["Error Detection", "Frame Check Sequence"],
+      "estimatedSolvingTimeSec": 65
+    }
+  ]
+}

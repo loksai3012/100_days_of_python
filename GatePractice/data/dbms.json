@@ -1,0 +1,89 @@
+{
+  "subject": "Database Management Systems",
+  "questions": [
+    {
+      "id": "DBMS-001",
+      "subject": "DBMS",
+      "topic": "Normalization",
+      "difficulty": "medium",
+      "type": "MCQ",
+      "marks": 1,
+      "negativeMarks": 0.33,
+      "question": "A relation in BCNF is always in which normal forms?",
+      "options": [
+        { "key": "A", "text": "Only 1NF" },
+        { "key": "B", "text": "Only 2NF and 3NF" },
+        { "key": "C", "text": "1NF, 2NF, and 3NF" },
+        { "key": "D", "text": "Only 4NF" }
+      ],
+      "correctAnswer": "C",
+      "explanation": "BCNF is stricter than 3NF, so lower normal forms are satisfied.",
+      "shortcut": "Higher normal form implies all lower forms.",
+      "commonMistakes": "Treating BCNF and 3NF as unrelated.",
+      "relatedConcepts": ["Functional Dependency", "Decomposition"],
+      "estimatedSolvingTimeSec": 35
+    },
+    {
+      "id": "DBMS-002",
+      "subject": "DBMS",
+      "topic": "Transactions",
+      "difficulty": "easy",
+      "type": "MSQ",
+      "marks": 2,
+      "negativeMarks": 0,
+      "question": "Which ACID properties are guaranteed by strict two-phase locking?",
+      "options": [
+        { "key": "A", "text": "Atomicity" },
+        { "key": "B", "text": "Isolation" },
+        { "key": "C", "text": "Consistency" },
+        { "key": "D", "text": "Durability" }
+      ],
+      "correctAnswer": ["A", "B", "C"],
+      "explanation": "2PL enforces serializability (isolation). Atomicity/consistency are transaction manager guarantees; durability needs logging/storage.",
+      "shortcut": "2PL focuses on isolation/serializability.",
+      "commonMistakes": "Assuming locking alone provides durability.",
+      "relatedConcepts": ["Concurrency Control", "Recoverability"],
+      "estimatedSolvingTimeSec": 60
+    },
+    {
+      "id": "DBMS-003",
+      "subject": "DBMS",
+      "topic": "Indexing",
+      "difficulty": "hard",
+      "type": "NAT",
+      "marks": 2,
+      "negativeMarks": 0.67,
+      "question": "If a B+ tree has fanout 100, minimum height required to index 1,000,000 keys?",
+      "options": [],
+      "correctAnswer": 3,
+      "tolerance": 0,
+      "explanation": "100^3 = 1,000,000 so height 3 (root to leaves levels depending convention).",
+      "shortcut": "Use log base fanout of key count.",
+      "commonMistakes": "Confusing nodes and levels.",
+      "relatedConcepts": ["B Trees", "Disk Access"],
+      "estimatedSolvingTimeSec": 70
+    },
+    {
+      "id": "DBMS-004",
+      "subject": "DBMS",
+      "topic": "SQL",
+      "difficulty": "medium",
+      "type": "MCQ",
+      "marks": 1,
+      "negativeMarks": 0.33,
+      "question": "Which SQL clause is evaluated after GROUP BY?",
+      "options": [
+        { "key": "A", "text": "WHERE" },
+        { "key": "B", "text": "HAVING" },
+        { "key": "C", "text": "FROM" },
+        { "key": "D", "text": "ON" }
+      ],
+      "correctAnswer": "B",
+      "explanation": "HAVING filters grouped rows after aggregation.",
+      "shortcut": "WHERE before grouping, HAVING after grouping.",
+      "commonMistakes": "Using WHERE for aggregate filters.",
+      "relatedConcepts": ["Aggregation", "Query Processing"],
+      "estimatedSolvingTimeSec": 40
+    }
+  ]
+}

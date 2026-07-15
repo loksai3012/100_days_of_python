@@ -1,0 +1,19 @@
+{
+  "subjects": [
+    {
+      "code": "OS",
+      "name": "Operating Systems",
+      "file": "operating_systems.json"
+    },
+    {
+      "code": "DBMS",
+      "name": "Database Management Systems",
+      "file": "dbms.json"
+    },
+    {
+      "code": "CN",
+      "name": "Computer Networks",
+      "file": "computer_networks.json"
+    }
+  ]
+}

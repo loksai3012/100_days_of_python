@@ -1,0 +1,85 @@
+{
+  "subject": "Operating Systems",
+  "questions": [
+    {
+      "id": "OS-001",
+      "subject": "OS",
+      "topic": "Process Scheduling",
+      "difficulty": "medium",
+      "type": "MCQ",
+      "marks": 1,
+      "negativeMarks": 0.33,
+      "question": "In Round Robin scheduling, what happens when time quantum is too small?",
+      "options": [
+        { "key": "A", "text": "Response time improves but context switch overhead increases" },
+        { "key": "B", "text": "Throughput always increases" },
+        { "key": "C", "text": "No preemption occurs" },
+        { "key": "D", "text": "CPU utilization drops to zero" }
+      ],
+      "correctAnswer": "A",
+      "explanation": "Smaller quantum gives better responsiveness but frequent context switching increases overhead.",
+      "shortcut": "RR trade-off: smaller q => better response, higher switching overhead.",
+      "commonMistakes": "Choosing throughput improvement as guaranteed.",
+      "relatedConcepts": ["CPU Scheduling", "Context Switch"],
+      "estimatedSolvingTimeSec": 45
+    },
+    {
+      "id": "OS-002",
+      "subject": "OS",
+      "topic": "Deadlock",
+      "difficulty": "easy",
+      "type": "MSQ",
+      "marks": 2,
+      "negativeMarks": 0,
+      "question": "Which are Coffman deadlock conditions?",
+      "options": [
+        { "key": "A", "text": "Mutual Exclusion" },
+        { "key": "B", "text": "Hold and Wait" },
+        { "key": "C", "text": "Preemption" },
+        { "key": "D", "text": "Circular Wait" }
+      ],
+      "correctAnswer": ["A", "B", "D"],
+      "explanation": "No preemption is a condition, not preemption.",
+      "shortcut": "Remember MHNC: Mutual exclusion, Hold and wait, No preemption, Circular wait.",
+      "commonMistakes": "Selecting preemption instead of no-preemption.",
+      "relatedConcepts": ["Resource Allocation Graph", "Banker's Algorithm"],
+      "estimatedSolvingTimeSec": 40
+    },
+    {
+      "id": "OS-003",
+      "subject": "OS",
+      "topic": "Paging",
+      "difficulty": "medium",
+      "type": "NAT",
+      "marks": 2,
+      "negativeMarks": 0,
+      "question": "Page size is 4 KB, virtual address space is 32-bit. How many bits are used for offset?",
+      "options": [],
+      "correctAnswer": 12,
+      "tolerance": 0,
+      "explanation": "4 KB = 2^12 bytes, so offset needs 12 bits.",
+      "shortcut": "Offset bits = log2(page size in bytes).",
+      "commonMistakes": "Using KB as 1000 bytes.",
+      "relatedConcepts": ["Virtual Memory", "Address Translation"],
+      "estimatedSolvingTimeSec": 30
+    },
+    {
+      "id": "OS-004",
+      "subject": "OS",
+      "topic": "Process Creation",
+      "difficulty": "hard",
+      "type": "NAT",
+      "marks": 2,
+      "negativeMarks": 0.67,
+      "question": "A process creates 3 children. Each child creates 2 children. Total number of processes including parent?",
+      "options": [],
+      "correctAnswer": 10,
+      "tolerance": 0,
+      "explanation": "1 parent + 3 children + 6 grandchildren = 10.",
+      "shortcut": "Total = 1 + n + n*m for this pattern.",
+      "commonMistakes": "Forgetting parent count.",
+      "relatedConcepts": ["fork", "Process Tree"],
+      "estimatedSolvingTimeSec": 45
+    }
+  ]
+}

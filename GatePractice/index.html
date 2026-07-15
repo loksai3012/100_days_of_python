@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GATE CS Practice Platform</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div id="app" class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>GATE CS Practice Platform</h1>
+          <p class="subtle">Offline-first practice workspace</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="themeToggle" class="btn secondary">Toggle Theme</button>
+          <button id="resumeSessionBtn" class="btn">Resume Session</button>
+        </div>
+      </header>
+
+      <nav class="tabs" id="navTabs">
+        <button class="tab active" data-target="dashboardPanel">Dashboard</button>
+        <button class="tab" data-target="practicePanel">Practice</button>
+        <button class="tab" data-target="testBuilderPanel">Test Modes</button>
+        <button class="tab" data-target="reviewPanel">Review</button>
+        <button class="tab" data-target="analyticsPanel">Analytics</button>
+      </nav>
+
+      <main class="content-grid">
+        <section id="dashboardPanel" class="panel active"></section>
+
+        <section id="practicePanel" class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Practice Screen</h2>
+              <p class="subtle" id="practiceMeta">Choose a mode to start.</p>
+            </div>
+            <div class="inline-controls">
+              <button id="prevQuestionBtn" class="btn secondary">Prev (←)</button>
+              <button id="nextQuestionBtn" class="btn secondary">Next (→)</button>
+              <button id="saveResponseBtn" class="btn">Save (S)</button>
+              <button id="markReviewBtn" class="btn warning">Mark Review (M)</button>
+              <button id="clearResponseBtn" class="btn secondary">Clear (C)</button>
+              <button id="submitTestBtn" class="btn danger">Submit (Enter)</button>
+            </div>
+          </div>
+
+          <div class="practice-layout">
+            <article class="question-card">
+              <div class="question-top">
+                <div id="questionBadge" class="badge">Q0</div>
+                <div id="questionTags" class="question-tags"></div>
+                <div id="questionTimer" class="timer">00:00</div>
+              </div>
+              <h3 id="questionText">No active question.</h3>
+              <div id="questionOptions" class="options"></div>
+              <div class="notes-box">
+                <label for="noteInput">Personal Notes</label>
+                <textarea id="noteInput" placeholder="Write your personal note for this question..."></textarea>
+              </div>
+            </article>
+
+            <aside class="palette-card">
+              <div class="palette-title-row">
+                <h3>Question Palette</h3>
+                <span id="progressText" class="subtle">0 / 0</span>
+              </div>
+              <div id="paletteGrid" class="palette-grid"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="testBuilderPanel" class="panel">
+          <div class="panel-header">
+            <h2>Test Modes</h2>
+          </div>
+          <form id="testBuilderForm" class="builder-form">
+            <div class="field">
+              <label for="modeSelect">Mode</label>
+              <select id="modeSelect" required>
+                <option value="practice">Practice Mode</option>
+                <option value="topic">Topic Test</option>
+                <option value="timed">Timed Test</option>
+                <option value="custom">Custom Test</option>
+                <option value="mixed">Mixed Test</option>
+                <option value="wrong">Wrong Question Test</option>
+                <option value="bookmarked">Bookmarked Question Test</option>
+                <option value="mock">Mock GATE Test</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="subjectSelect">Subject</label>
+              <select id="subjectSelect">
+                <option value="all">All Subjects</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="topicInput">Topic (optional)</label>
+              <input id="topicInput" type="text" placeholder="e.g., Process Scheduling" />
+            </div>
+            <div class="field">
+              <label for="difficultySelect">Difficulty</label>
+              <select id="difficultySelect">
+                <option value="all">All</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="questionCount">Question Count</label>
+              <input id="questionCount" type="number" min="1" value="10" />
+            </div>
+            <div class="field">
+              <label for="durationInput">Duration Minutes</label>
+              <input id="durationInput" type="number" min="1" value="30" />
+            </div>
+            <button type="submit" class="btn">Start Test</button>
+          </form>
+
+          <div class="search-card">
+            <h3>Search & Filters</h3>
+            <div class="search-controls">
+              <input id="searchInput" type="search" placeholder="Keyword or Question ID" />
+              <select id="searchStatus">
+                <option value="all">All Status</option>
+                <option value="solved">Solved</option>
+                <option value="unsolved">Unsolved</option>
+                <option value="wrong">Wrong</option>
+                <option value="bookmarked">Bookmarked</option>
+              </select>
+              <button id="runSearchBtn" class="btn secondary">Search</button>
+            </div>
+            <div id="searchResults" class="search-results"></div>
+          </div>
+        </section>
+
+        <section id="reviewPanel" class="panel"></section>
+        <section id="analyticsPanel" class="panel"></section>
+      </main>
+
+      <footer class="footer subtle">
+        Offline by design • Auto-saves every action • Shortcut keys: ← → S M C Enter
+      </footer>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>
