@@ -1,0 +1,12 @@
+<h2>Reports</h2>
+<div style="display:flex; gap:8px; margin-bottom:12px;">
+  <button mat-flat-button color="primary" (click)="loadInventory()">Inventory Report</button>
+  <button mat-flat-button color="accent" (click)="loadSales()">Sales Report</button>
+  <button mat-stroked-button (click)="exportPdf()">Export PDF</button>
+</div>
+
+<h3>Inventory</h3>
+<ul><li *ngFor="let p of inventory">{{ p.name }} - Qty {{ p.quantity }}</li></ul>
+
+<h3>Sales</h3>
+<ul><li *ngFor="let s of sales">Product {{ s.productId }} - Qty {{ s.quantity }} - {{ s.createdAt | date:'short' }}</li></ul>

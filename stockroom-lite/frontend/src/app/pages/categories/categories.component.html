@@ -1,0 +1,9 @@
+<h2>Categories</h2>
+<form [formGroup]="form" (ngSubmit)="add()" class="form-row">
+  <mat-form-field><mat-label>Name</mat-label><input matInput formControlName="name" /></mat-form-field>
+  <mat-form-field><mat-label>Description</mat-label><input matInput formControlName="description" /></mat-form-field>
+  <button mat-flat-button color="primary">Add</button>
+</form>
+<ul>
+  <li *ngFor="let c of categories">{{ c.name }} - {{ c.description || '-' }} <button mat-button color="warn" (click)="deleteItem(c.id)">Delete</button></li>
+</ul>

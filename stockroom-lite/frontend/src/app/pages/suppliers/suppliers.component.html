@@ -1,0 +1,11 @@
+<h2>Suppliers</h2>
+<form [formGroup]="form" (ngSubmit)="add()" class="form-row">
+  <mat-form-field><mat-label>Name</mat-label><input matInput formControlName="name" /></mat-form-field>
+  <mat-form-field><mat-label>Email</mat-label><input matInput formControlName="email" /></mat-form-field>
+  <mat-form-field><mat-label>Phone</mat-label><input matInput formControlName="phone" /></mat-form-field>
+  <mat-form-field><mat-label>Address</mat-label><input matInput formControlName="address" /></mat-form-field>
+  <button mat-flat-button color="primary">Add</button>
+</form>
+<ul>
+  <li *ngFor="let s of suppliers">{{ s.name }} - {{ s.email || '-' }} <button mat-button color="warn" (click)="deleteItem(s.id)">Delete</button></li>
+</ul>

@@ -1,0 +1,21 @@
+<div class="login-wrapper">
+  <mat-card>
+    <h2>Stockroom Lite Login</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" />
+      </mat-form-field>
+
+      <p class="error" *ngIf="error">{{ error }}</p>
+      <button mat-flat-button color="primary" [disabled]="loading || form.invalid">
+        {{ loading ? 'Signing in...' : 'Sign in' }}
+      </button>
+    </form>
+  </mat-card>
+</div>

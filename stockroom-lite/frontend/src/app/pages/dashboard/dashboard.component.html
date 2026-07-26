@@ -1,0 +1,8 @@
+<h2>Dashboard</h2>
+<div class="cards" *ngIf="stats">
+  <mat-card>Total Products: {{ stats.totalProducts }}</mat-card>
+  <mat-card>Total Categories: {{ stats.totalCategories }}</mat-card>
+  <mat-card>Total Suppliers: {{ stats.totalSuppliers }}</mat-card>
+  <mat-card>Low Stock Products: {{ stats.lowStockCount }}</mat-card>
+  <mat-card>Inventory Value: ₹{{ stats.inventoryValue | number:'1.2-2' }}</mat-card>
+</div>
