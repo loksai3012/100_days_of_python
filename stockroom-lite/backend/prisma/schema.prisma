@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+}
+
+enum StockTransactionType {
+  IN
+  OUT
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Supplier {
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String?   @unique
+  phone       String?
+  address     String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id                Int                @id @default(autoincrement())
+  name              String
+  sku               String             @unique
+  description       String?
+  imageUrl          String?
+  unitPrice         Decimal            @db.Decimal(10, 2)
+  quantity          Int                @default(0)
+  lowStockThreshold Int                @default(5)
+  categoryId        Int
+  supplierId        Int
+  category          Category           @relation(fields: [categoryId], references: [id])
+  supplier          Supplier           @relation(fields: [supplierId], references: [id])
+  transactions      StockTransaction[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  @@index([categoryId])
+  @@index([supplierId])
+}
+
+model StockTransaction {
+  id           Int                  @id @default(autoincrement())
+  productId    Int
+  type         StockTransactionType
+  quantity     Int
+  note         String?
+  unitPrice    Decimal?             @db.Decimal(10, 2)
+  performedBy  Int
+  createdAt    DateTime             @default(now())
+  product      Product              @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+}
