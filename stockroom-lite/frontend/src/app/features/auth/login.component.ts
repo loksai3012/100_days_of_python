@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SessionService } from '../../core/services/session.service';
 
@@ -9,16 +9,18 @@ import { SessionService } from '../../core/services/session.service';
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  form = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
-  });
+  readonly form: FormGroup;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly sessionService: SessionService,
-  ) {}
+  ) {
+    this.form = this.fb.nonNullable.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+    });
+  }
 
   submit(): void {
     if (this.form.invalid) return;
