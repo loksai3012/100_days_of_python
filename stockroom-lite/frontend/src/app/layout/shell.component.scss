@@ -1,0 +1,29 @@
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  padding: 1rem;
+  background: #0f172a;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar a {
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  color: #fff;
+  font-weight: 600;
+}
+
+.content {
+  padding: 1.5rem;
+  background: #f8fafc;
+}

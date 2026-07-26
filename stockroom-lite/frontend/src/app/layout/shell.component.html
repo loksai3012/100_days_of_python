@@ -1,0 +1,9 @@
+<div class="layout">
+  <aside class="sidebar">
+    <h2>Stockroom Lite</h2>
+    <a *ngFor="let item of navItems" [routerLink]="item.path" routerLinkActive="active">{{ item.label }}</a>
+  </aside>
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>

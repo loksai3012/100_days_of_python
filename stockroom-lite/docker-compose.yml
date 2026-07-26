@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: stockroom_lite
+      MYSQL_USER: stockroom
+      MYSQL_PASSWORD: stockroom
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    env_file:
+      - ./backend/.env.example
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
